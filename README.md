@@ -1,14 +1,45 @@
-# Github avatars generator 
+# Github avatars generator
 
-![example1](./examples/test1.png)
-![example2](./examples/test2.png)
-![example3](./examples/test3.png)
-![example4](./examples/test4.png)
+Nick | gxp3lP (rnd)                           | non3kF (rnd)                          | mdpanf                           | Steio                          |
+---- |----------------------------------------|---------------------------------------|----------------------------------|--------------------------------|
+Ava  | ![example1](./examples/example_1.png)  | ![example2](./examples/example_2.png) | ![mdpanf](./examples/mdpanf.png) | ![Steio](./examples/Steio.png) | 
 
-## Run
+## Usage
+
+### Create random avatar
+
+```python
+from gh_avatars import Avatar
+
+ava = Avatar()
+image = ava.generate()
+
+image.save('file.png', 'PNG')
 ```
-python3 gen.py [avatar_size] [nickname]
+
+### Create nick-based avatar with params
+
+```python
+from gh_avatars import Avatar
+
+ava = Avatar(
+    size=120  # Multiple of 12
+)
+
+image = ava.generate(
+    nick='Steio',
+    color='#084C61'  # HEX-color string only
+)
+
+image.save('Steio.png', 'PNG')
 ```
 
-avatar_size - number must be multiple 12 \
-nickname - string
+## Params
+
+Avatar | size                   | background             |
+-------|------------------------|------------------------|
+Val    | **int** multiple of 12 | **str** back hex color |
+
+generate() | nick    | color                   |
+-----------|---------|-------------------------|
+Val        | **str** | **str** block hex color |
