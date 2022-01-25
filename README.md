@@ -29,7 +29,7 @@ ava = Avatar(
 
 image = ava.generate(
     nick='Steio',
-    color='#084C61'          # HEX-color string only
+    color='#084C61'         # HEX-color string only
 )
 
 image.save('Steio.png', 'PNG')
