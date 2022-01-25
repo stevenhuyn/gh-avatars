@@ -23,12 +23,13 @@ image.save('file.png', 'PNG')
 from gh_avatars import Avatar
 
 ava = Avatar(
-    size=120  # Multiple of 12
+    size=120,               # Multiple of 12
+    background = '#F2F1F2'  # HEX-color string only
 )
 
 image = ava.generate(
     nick='Steio',
-    color='#084C61'  # HEX-color string only
+    color='#084C61'          # HEX-color string only
 )
 
 image.save('Steio.png', 'PNG')
