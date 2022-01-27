@@ -72,5 +72,4 @@ class Avatar:
                 if need_to_paint:
                     draw.point((x, y), color)
 
-        print(nick)
         return img
