@@ -10,7 +10,7 @@ class Avatar:
     Base avatar class
     """
 
-    def __init__(self, size: int = 120, resolution: int = 6, background: str = '#f2f1f2',) -> None:
+    def __init__(self, size: int = 120, resolution: int = 12, background: str = '#f2f1f2') -> None:
         """
         Avatar init
 
