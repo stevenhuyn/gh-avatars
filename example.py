@@ -1,8 +1,9 @@
 from gh_avatars import Avatar
 
 ava = Avatar(
-    size=120,  # Multiple of 12
-    background='#f2f1f2'  # HEX-color string only
+    background='#f2f1f2',  # HEX-color string only
+    resolution=12, # Width of pixel grid
+    size=120  # Multiple of resolution
 )
 
 image = ava.generate(

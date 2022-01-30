@@ -10,16 +10,18 @@ class Avatar:
     Base avatar class
     """
 
-    def __init__(self, size: int = 120, background: str = '#f2f1f2') -> None:
+    def __init__(self, size: int = 120, resolution: int = 6, background: str = '#f2f1f2',) -> None:
         """
         Avatar init
 
-        :param size: int avatar size (multiple of 12) [base 120]
         :param background: str background color (#f2f1f2)
+        :param resolution: int size of width of pixel grid to generate
+        :param size: int avatar size multiple of (resolution)
         :return: None
         """
-        self.size = size
         self.background = background
+        self.resolution = resolution 
+        self.size = size
 
     def generate(self, nick: str = None, color: str = None) -> Image:
         """
@@ -37,31 +39,44 @@ class Avatar:
                  range(6)])
 
         # Getting bytes from a nickname
-        _bytes = hashlib.md5(nick.encode('utf-8')).digest()
+        _bytes = hashlib.sha512(nick.encode('utf-8')).digest()
+
+        # Getting binary string
+        _binary_str = bin(int(hashlib.sha512(nick.encode('utf-8')).hexdigest(), 16))[2:]
 
         # Getting the color from bytes and converting the color to RGB
         if not color:
-            color = tuple(channel // 2 + 128 for channel in _bytes[6:9])
+            color = tuple(channel // 2 + 128 for channel in _bytes[-3:])
 
         """Generating a matrix of filling blocks"""
-        # 6x12 array
+        half_resolution = (self.resolution // 2) + 1
+
+        # Generating randomised half grid matrix
         _pattern = np.array(
-            [bit == '1' for byte in _bytes[3:3 + 9] for bit in bin(byte)[2:].zfill(8)]
-        ).reshape(6, 12)
-        # Increasing to 12x12 array
-        _pattern = np.concatenate((_pattern, _pattern[::-1]), axis=0)
+            [bit == '1' for bit in _binary_str[:self.resolution * half_resolution]]
+        ).reshape(half_resolution, self.resolution)
+
+
+        # Mirroring to get full grid
+        if self.resolution % 2 == 0:
+            # Even sized pattern
+            _pattern = np.concatenate((_pattern, _pattern[::-1]), axis=0)
+        else:
+            # Odd sized pattern
+            _pattern = np.concatenate((_pattern, _pattern[::-1][1:]), axis=0)
+
 
         # Removing blocks at the edges
-        for i in range(12):
+        for i in range(self.resolution):
             _pattern[0, i] = 0
-            _pattern[11, i] = 0
+            _pattern[self.resolution - 1, i] = 0
             _pattern[i, 0] = 0
-            _pattern[i, 11] = 0
+            _pattern[i, self.resolution - 1] = 0
 
         """Draw images according to the filling matrix"""
 
         img_size = (self.size, self.size)
-        block_size = self.size // 12  # Square size
+        block_size = self.size // self.resolution  # Square size
 
         img = Image.new('RGB', img_size, self.background)
         draw = ImageDraw.Draw(img)

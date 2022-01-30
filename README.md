@@ -6,6 +6,10 @@ Ava  | ![example1](./examples/example_1.png)  | ![example2](./examples/example_2
 
 ## Usage
 
+### Install packages
+
+`pip install -r requirements.txt`
+
 ### Create random avatar
 
 ```python
@@ -23,13 +27,14 @@ image.save('file.png', 'PNG')
 from gh_avatars import Avatar
 
 ava = Avatar(
-    size=120,               # Multiple of 12
-    background = '#F2F1F2'  # HEX-color string only
+    background='#f2f1f2',  # HEX-color string only
+    resolution=12, # Width of pixel grid
+    size=120  # Multiple of resolution
 )
 
 image = ava.generate(
-    nick='Steio',
-    color='#084C61'         # HEX-color string only
+    nick='mdpanf',
+    color='#084C61'  # HEX-color string only
 )
 
 image.save('Steio.png', 'PNG')
