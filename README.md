@@ -33,7 +33,7 @@ ava = Avatar(
 )
 
 image = ava.generate(
-    nick='mdpanf',
+    nick='Steio',
     color='#084C61'  # HEX-color string only
 )
 
