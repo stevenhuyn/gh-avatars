@@ -16,7 +16,7 @@ class Avatar:
 
         :param background: str background color (#f2f1f2)
         :param resolution: int size of width of pixel grid to generate
-        :param size: int avatar size multiple of (resolution) max value 512
+        :param size: int avatar size multiple of (resolution)
         :return: None
         """
         self.background = background
@@ -40,18 +40,19 @@ class Avatar:
                  range(6)])
 
         # Getting bytes from a nickname
-        sha_hash = hashlib.sha512(nick.encode('utf-8'))
-        _bytes = sha_hash.digest()
+        hash_function = hashlib.md5
+        hash_obj = hash_function(nick.encode('utf-8'))
+        _bytes = hash_obj.digest()
 
         # Getting binary string 
         half_resolution = ceil(self.resolution / 2)
 
-        _binary_str = bin(int(hashlib.sha512(nick.encode('utf-8')).hexdigest(), 16))[2:]
+        binary_str = bin(int(hash_function(nick.encode('utf-8')).hexdigest(), 16))[2:]
 
-        # 
-        while len(_binary_str) < self.resolution * half_resolution:
-            sha_hash = hashlib.sha512(sha_hash.hexdigest().encode('utf-8'))
-            _binary_str += bin(int(sha_hash.hexdigest(), 16))[2:]
+        # Extending binary string until length is sufficient for half matrix
+        while len(binary_str) < self.resolution * half_resolution:
+            hash_obj = hash_function(hash_obj.hexdigest().encode('utf-8'))
+            binary_str += bin(int(hash_obj.hexdigest(), 16))[2:]
 
         # Getting the color from bytes and converting the color to RGB
         if not color:
@@ -61,7 +62,7 @@ class Avatar:
 
         # Generating randomised half grid matrix
         _pattern = np.array(
-            [bit == '1' for bit in _binary_str[:self.resolution * half_resolution]]
+            [bit == '1' for bit in binary_str[:self.resolution * half_resolution]]
         ).reshape(half_resolution, self.resolution)
 
         # Mirroring to get full grid
