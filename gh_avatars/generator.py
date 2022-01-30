@@ -3,7 +3,7 @@ from random import choice
 from PIL import Image, ImageDraw
 import numpy as np
 import string
-
+from math import ceil
 
 class Avatar:
     """
@@ -16,7 +16,7 @@ class Avatar:
 
         :param background: str background color (#f2f1f2)
         :param resolution: int size of width of pixel grid to generate
-        :param size: int avatar size multiple of (resolution)
+        :param size: int avatar size multiple of (resolution) max value 512
         :return: None
         """
         self.background = background
@@ -32,6 +32,7 @@ class Avatar:
         :return: Image (Pillow obj)
         """
 
+
         # Getting random nick if none
         if not nick:
             nick = ''.join(
@@ -39,23 +40,29 @@ class Avatar:
                  range(6)])
 
         # Getting bytes from a nickname
-        _bytes = hashlib.sha512(nick.encode('utf-8')).digest()
+        sha_hash = hashlib.sha512(nick.encode('utf-8'))
+        _bytes = sha_hash.digest()
 
-        # Getting binary string
+        # Getting binary string 
+        half_resolution = ceil(self.resolution / 2)
+
         _binary_str = bin(int(hashlib.sha512(nick.encode('utf-8')).hexdigest(), 16))[2:]
+
+        # 
+        while len(_binary_str) < self.resolution * half_resolution:
+            sha_hash = hashlib.sha512(sha_hash.hexdigest().encode('utf-8'))
+            _binary_str += bin(int(sha_hash.hexdigest(), 16))[2:]
 
         # Getting the color from bytes and converting the color to RGB
         if not color:
             color = tuple(channel // 2 + 128 for channel in _bytes[-3:])
 
         """Generating a matrix of filling blocks"""
-        half_resolution = (self.resolution // 2) + 1
 
         # Generating randomised half grid matrix
         _pattern = np.array(
             [bit == '1' for bit in _binary_str[:self.resolution * half_resolution]]
         ).reshape(half_resolution, self.resolution)
-
 
         # Mirroring to get full grid
         if self.resolution % 2 == 0:
