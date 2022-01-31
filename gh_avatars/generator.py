@@ -84,14 +84,14 @@ class Avatar:
         """Draw images according to the filling matrix"""
 
         img_size = (self.size, self.size)
-        block_size = self.size // self.resolution  # Square size
+        block_size = self.size / self.resolution  # Square size
 
         img = Image.new('RGB', img_size, self.background)
         draw = ImageDraw.Draw(img)
 
         for x in range(self.size):
             for y in range(self.size):
-                need_to_paint = _pattern[x // block_size, y // block_size]
+                need_to_paint = _pattern[int(x // block_size), int(y // block_size)]
                 if need_to_paint:
                     draw.point((x, y), color)
 

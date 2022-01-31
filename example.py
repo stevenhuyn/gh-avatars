@@ -3,7 +3,7 @@ from gh_avatars import Avatar
 ava = Avatar(
     background='#f2f1f2',  # HEX-color string only
     resolution=12, # Width of pixel grid
-    size=120  # Multiple of resolution
+    size=500  # Multiple of resolution
 )
 
 image = ava.generate(
