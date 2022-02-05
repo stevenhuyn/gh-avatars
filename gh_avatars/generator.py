@@ -4,6 +4,7 @@ from PIL import Image, ImageDraw
 import numpy as np
 import string
 from math import ceil
+from colorsys import hsv_to_rgb
 
 class Avatar:
     """
@@ -55,8 +56,11 @@ class Avatar:
             binary_str += bin(int(hash_obj.hexdigest(), 16))[2:]
 
         # Getting the color from bytes and converting the color to RGB
-        if not color:
-            color = tuple(channel // 2 + 128 for channel in _bytes[-3:])
+        channels = list(map(lambda c: c / 255, _bytes[-3:]))
+        saturation = 0.3 * (1 - channels[1]) + channels[1] * 1 # Lerp value to cap
+        value = 0.8 * (1 - channels[2]) + channels[2] * 1 # Lerp value to cap
+        rgb = tuple(map(lambda c: int(c * 255), hsv_to_rgb(channels[0], saturation, value)))
+        if not color: color = rgb
 
         """Generating a matrix of filling blocks"""
 
