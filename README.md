@@ -1,14 +1,17 @@
 # Github avatars generator
 
-Nick | gxp3lP (rnd)                           | non3kF (rnd)                          | mdpanf                           | Steio                          |
----- |----------------------------------------|---------------------------------------|----------------------------------|--------------------------------|
-Ava  | ![example1](./examples/example_1.png)  | ![example2](./examples/example_2.png) | ![mdpanf](./examples/mdpanf.png) | ![Steio](./examples/Steio.png) | 
+<p align="center">
+  <img src="./examples/7-350.png" width="auto">
+  <img src="./examples/14-350.png" width="auto">
+  <img src="./examples/70-350.png" width="auto">
+</p>
 
 ## Usage
 
 ### Install packages
-
-`pip install -r requirements.txt`
+```
+pip install -r requirements.txt
+```
 
 ### Create random avatar
 
@@ -33,19 +36,9 @@ ava = Avatar(
 )
 
 image = ava.generate(
-    nick='Steio',
+    nick='codedragon2002',
     color='#084C61'  # HEX-color string only
 )
 
-image.save('Steio.png', 'PNG')
+image.save('codedragon2002.png', 'PNG')
 ```
-
-## Params
-
-Avatar | size                   | background             |
--------|------------------------|------------------------|
-Val    | **int** multiple of 12 | **str** back hex color |
-
-generate() | nick    | color                   |
------------|---------|-------------------------|
-Val        | **str** | **str** block hex color |
