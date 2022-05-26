@@ -33,8 +33,8 @@ from gh_avatars import Avatar
 
 ava = Avatar(
     background='#f2f1f2',  # HEX-color string only
-    resolution=12, # Width of pixel grid
-    size=120  # Multiple of resolution
+    resolution=7, # Width of a cell in pixels
+    size=350  # Size of rendered image in pixels
 )
 
 image = ava.generate(

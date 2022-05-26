@@ -33,7 +33,6 @@ class Avatar:
         :return: Image (Pillow obj)
         """
 
-
         # Getting random nick if none
         if not nick:
             nick = ''.join(
