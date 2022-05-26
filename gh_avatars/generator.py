@@ -41,7 +41,7 @@ class Avatar:
                  range(6)])
 
         # Getting bytes from a nickname
-        hash_function = hashlib.md5
+        hash_function = hashlib.sha512
         hash_obj = hash_function(nick.encode('utf-8'))
         _bytes = hash_obj.digest()
 
