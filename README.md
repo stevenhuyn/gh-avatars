@@ -1,9 +1,9 @@
 # Github avatars generator
 
-<p align="center">
-  <img src="./examples/7-350.png" width="auto">
-  <img src="./examples/14-350.png" width="auto">
-  <img src="./examples/70-350.png" width="auto">
+<p align="center" style="display: flex; align-items: flex-start;">
+  <img src="./examples/7-350.png">
+  <img src="./examples/14-350.png">
+  <img src="./examples/70-350.png">
 </p>
 
 ## Usage
